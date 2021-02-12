@@ -4,16 +4,12 @@ $Core->setTitle('Mensch update | Code');
 
 require_once OSWMENSCH_CORE_ABSPATH.'php'.DIRECTORY_SEPARATOR.'header.inc.php';
 
-#print_a(strtotime('Thu Feb 11 12:37:39 2021 +0100'));
-
-
-#'git reset --hard';
-#$cmd='cd '.\osWMensch\Server\Configure::getValueAsString('git_path').' && git log -- source/oswframe.cookie';
-
-$cmd='cd '.\osWMensch\Server\Configure::getValueAsString('git_mensch_path').' && git pull && cp -R source/* ../';
+$cmd='cd '.\osWMensch\Server\Configure::getValueAsString('git_mensch_path').' && git pull';
 $return=shell_exec($cmd);
 if ($return===null) {
 	$return='result is null, command: "'.$cmd.'"';
+} else {
+	\osWMensch\Server\Configure::copyRecurse((str_replace(\osWMensch\Server\Configure::getValueAsString('mensch_path'), './', \osWMensch\Server\Configure::getValueAsString('git_mensch_path')).'source/'), str_replace(\osWMensch\Server\Configure::getValueAsString('mensch_path'), '.', \osWMensch\Server\Configure::getValueAsString('mensch_path')));
 }
 
 ?>

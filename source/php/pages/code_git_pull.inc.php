@@ -4,12 +4,6 @@ $Core->setTitle('Git pull | Code');
 
 require_once OSWMENSCH_CORE_ABSPATH.'php'.DIRECTORY_SEPARATOR.'header.inc.php';
 
-#print_a(strtotime('Thu Feb 11 12:37:39 2021 +0100'));
-
-
-#'git reset --hard';
-#$cmd='cd '.\osWMensch\Server\Configure::getValueAsString('git_path').' && git log -- source/oswframe.cookie';
-
 $cmd='cd '.\osWMensch\Server\Configure::getValueAsString('git_path').' && git pull';
 $return=shell_exec($cmd);
 if ($return===null) {
