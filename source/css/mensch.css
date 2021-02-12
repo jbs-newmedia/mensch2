@@ -1,0 +1,14 @@
+html,
+body {
+    font-family: "verdana", "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 0.95rem;
+}
+
+.bg-gradient-primary {
+    background-color: #FF7F02;
+    background-size: cover
+}
+
+.sidebar-dark .nav-item .nav-link {
+    color: #fff;
+}

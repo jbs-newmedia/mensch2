@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * This file is part of the Mensch2 package
+ *
+ * @author Juergen Schwind
+ * @copyright Copyright (c) JBS New Media GmbH - Juergen Schwind (https://jbs-newmedia.com)
+ * @package Mensch2
+ * @link https://oswframe.com
+ * @license https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
+ */
+
+/**
+ * Beispieldatei, umbenennen in "configure.inc.php"
+ */
+
+/**
+ * Konfiguration
+ */
+$configure['mysql_server']='localhost';
+$configure['mysql_user']='';
+$configure['mysql_password']='';
+$configure['mysql_database']='';
+$configure['mysql_prefix']='';
+$configure['mysql_engine']='InnoDB';
+$configure['mysql_character']='utf8mb4';
+$configure['mysql_collation']='utf8mb4_general_ci';
+$configure['source_serverlist']='';
+$configure['source_serverlist_name']='';
+$configure['source_serverlist_package']='';
+$configure['mensch_url']='';
+$configure['mensch_path']=OSWMENSCH_CORE_ABSPATH;
+$configure['git_path']='';
+$configure['source_path']=$configure['git_path'].'source/';
+$configure['release']=['stable', 'beta', 'alpha'];
+$configure['prefix']=[''];
+
+?>
