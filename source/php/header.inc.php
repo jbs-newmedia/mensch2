@@ -51,6 +51,7 @@
 					<div id="collapseCode" class="collapse<?php if($Core->isActivePage('code')===true):?> show<?php endif?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 						<div class="bg-white py-2 collapse-inner rounded">
 							<a class="collapse-item<?php if($Core->isActivePage('code_git_pull')===true):?> active<?php endif?>" href="code/git_pull">Git pull</a>
+							<a class="collapse-item<?php if($Core->isActivePage('code_git_mensch_update')===true):?> active<?php endif?>" href="code/git_mensch_update">Mensch update</a>
 						</div>
 					</div>
 				</li>

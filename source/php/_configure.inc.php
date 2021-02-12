@@ -31,6 +31,7 @@ $configure['source_serverlist_package']='';
 $configure['mensch_url']='';
 $configure['mensch_path']=OSWMENSCH_CORE_ABSPATH;
 $configure['git_path']='';
+$configure['git_mensch_path']='';
 $configure['source_path']=$configure['git_path'].'source/';
 $configure['release']=['stable', 'beta', 'alpha'];
 $configure['prefix']=[''];
