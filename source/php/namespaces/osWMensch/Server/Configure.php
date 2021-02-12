@@ -176,6 +176,28 @@ class Configure {
 		return true;
 	}
 
+	/**
+	 * @source https://www.php.net/manual/de/function.copy.php#91010
+	 * @param string $src
+	 * @param string $dst
+	 * @return bool
+	 */
+	public static function copyRecurse(string $src, string $dst):bool {
+		$dir=opendir($src);
+		@mkdir($dst);
+		while (false!==($file=readdir($dir))) {
+			if (($file!='.')&&($file!='..')) {
+				if (is_dir($src.'/'.$file)) {
+					recurse_copy($src.'/'.$file, $dst.'/'.$file);
+				} else {
+					copy($src.'/'.$file, $dst.'/'.$file);
+				}
+			}
+		}
+		closedir($dir);
+		return true;
+	}
+
 }
 
 ?>
