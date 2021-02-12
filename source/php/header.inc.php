@@ -98,6 +98,8 @@
 						</div>
 					</div>
 				</li>
+				<hr class="sidebar-divider my-0">
+				<p class="text-center"><small>Version: <?php echo \osWMensch\Server\Configure::getValueAsString('mensch_version')?></small></p>
 			</ul>
 			<div id="content-wrapper" class="d-flex flex-column">
 				<div id="content">
