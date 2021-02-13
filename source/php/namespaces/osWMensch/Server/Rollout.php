@@ -201,12 +201,12 @@ class Rollout {
 			$this->addLog('Packages are outdated with checksum '.$this->getServerCheckSum().', current checksum is '.$this->getCheckSum());
 			$this->updateServerData();
 
-			if ($this->getServerCheckSum()!=$this->getCheckSum()) {
+			if ($this->getServerCheckSum()==$this->getCheckSum()) {
 				$this->addLog('Packages updated successfully with checksum '.$this->getServerVersion());
 
 				return true;
 			} else {
-				$this->addLog('Packages can\t update with checksum '.$this->getServerCheckSum());
+				$this->addLog('Packages can\'t update with checksum '.$this->getServerCheckSum());
 
 				return false;
 			}
