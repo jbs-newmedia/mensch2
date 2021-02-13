@@ -202,7 +202,7 @@ class Rollout {
 			$this->updateServerData();
 
 			if ($this->getServerCheckSum()==$this->getCheckSum()) {
-				$this->addLog('Packages updated successfully with checksum '.$this->getServerVersion());
+				$this->addLog('Packages updated successfully with checksum '.$this->getServerCheckSum());
 
 				return true;
 			} else {
