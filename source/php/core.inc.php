@@ -62,8 +62,9 @@ if (isset($_POST['page'])) {
 /**
  * Url prüfen
  */
-if (\osWMensch\Server\Configure::getValueAsString('mensch_url')!=($_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/')) {
-	header('Location: '.str_replace('//', '/', \osWMensch\Server\Configure::getValueAsString('mensch_url').$_SERVER['REQUEST_URI']));
+if (\osWMensch\Server\Configure::getValueAsString('mensch_url').'/'!=($_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/')) {
+	$url=\osWMensch\Server\Configure::getValueAsString('mensch_url').\osWMensch\Server\Configure::getValueAsString('mensch_url_path').str_replace(\osWMensch\Server\Configure::getValueAsString('mensch_url_path'), '', $_SERVER['REQUEST_URI']);
+	header('Location: '.$url);
 }
 
 /**
