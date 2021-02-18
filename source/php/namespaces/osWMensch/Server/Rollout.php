@@ -241,8 +241,8 @@ class Rollout {
 		$file_server_content_current=str_replace('$SERVER_NAME$', $this->server_details['server_name'], $file_server_content_current);
 		$file_server_content_current=str_replace('$SERVER_URL$', $this->server_details['server_url'], $file_server_content_current);
 		$file_server_content_current=str_replace('$SERVER_FILE$', $this->server_details['server_file'], $file_server_content_current);
-		$file_server_content_current=str_replace('$SERVER_LIST_NAME$', \osWMensch\Server\Configure::getValueAsString('source_serverlist_name'), $file_server_content_current);
-		$file_server_content_current=str_replace('$SERVER_LIST$', \osWMensch\Server\Configure::getValueAsString('source_serverlist'), $file_server_content_current);
+		$file_server_content_current=str_replace('$SERVER_LIST_NAME$', \osWMensch\Server\Configure::getValueAsString('source_serverlist'), $file_server_content_current);
+		$file_server_content_current=str_replace('$SERVER_LIST$', \osWMensch\Server\Configure::getValueAsString('source_serverlist_package'), $file_server_content_current);
 		$file_server_content_current=str_replace('$SERVER_SECURE$', $this->server_details['server_secure'], $file_server_content_current);
 		$file_server_content_current=str_replace('$SERVER_TOKEN$', $this->server_details['server_token'], $file_server_content_current);
 

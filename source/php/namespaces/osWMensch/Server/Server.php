@@ -185,8 +185,8 @@ class Server {
 		$php_source=str_replace('$SERVER_NAME$', $server_details['server_name'], $php_source);
 		$php_source=str_replace('$SERVER_URL$', $server_details['server_url'], $php_source);
 		$php_source=str_replace('$SERVER_FILE$', $server_details['server_file'], $php_source);
-		$php_source=str_replace('$SERVER_LIST_NAME$', \osWMensch\Server\Configure::getValueAsString('source_serverlist_name'), $php_source);
-		$php_source=str_replace('$SERVER_LIST$', \osWMensch\Server\Configure::getValueAsString('source_serverlist'), $php_source);
+		$php_source=str_replace('$SERVER_LIST_NAME$', \osWMensch\Server\Configure::getValueAsString('source_serverlist'), $php_source);
+		$php_source=str_replace('$SERVER_LIST$', \osWMensch\Server\Configure::getValueAsString('source_serverlist_package'), $php_source);
 		$php_source=str_replace('$SERVER_SECURE$', $server_details['server_secure'], $php_source);
 		$php_source=str_replace('$SERVER_TOKEN$', $server_details['server_token'], $php_source);
 		header('Content-Type: text/plain');
