@@ -32,7 +32,7 @@ if ($server_list!=[]) {
 		?>
 		<div class="card shadow mb-4">
 			<div class="card-header py-3">
-				<h6 class="m-0 font-weight-bold text-primary"><?php echo $server_list[$server_id]['server_name'] ?> | Rollout | Packages</h6>
+				<h6 class="m-0 font-weight-bold text-primary"><?php echo $server_list[$server_id]['server_name'] ?> | Rollout | License</h6>
 			</div>
 			<div class="card-body">
 				<div class="alert alert-info mb-4">
