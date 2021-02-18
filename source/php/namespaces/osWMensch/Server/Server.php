@@ -29,17 +29,6 @@ class Server {
 	}
 
 	/**
-	 * @return bool
-	 */
-	public function checkTables():bool {
-		if ($this->checkTableServer()!==true) {
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
 	 * @return array
 	 */
 	public function getServerList():array {
@@ -80,7 +69,7 @@ class Server {
 	 * @param int $server_status
 	 * @return bool
 	 */
-	public function createServer(string $server_name, int $server_rank, string $server_url, string $server_file, string $server_secure, string $server_token, int $server_status):bool {
+	public static function createServer(string $server_name, int $server_rank, string $server_url, string $server_file, string $server_secure, string $server_token, int $server_status):bool {
 		$QinsertData=self::getConnection();
 		$QinsertData->prepare('INSERT INTO :table: (server_name, server_version, server_rank, server_url, server_file, server_secure, server_token, server_status, server_lastconnect, server_create_time, server_create_user_id, server_update_time, server_update_user_id) VALUES (:server_name:, :server_version:, :server_rank:, :server_url:, :server_file:, :server_secure:, :server_token:, :server_status:, :server_lastconnect:, :server_create_time:, :server_create_user_id:, :server_update_time:, :server_update_user_id:)');
 		$QinsertData->bindTable(':table:', 'mensch_server');

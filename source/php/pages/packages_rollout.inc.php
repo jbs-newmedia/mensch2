@@ -7,9 +7,6 @@ require_once OSWMENSCH_CORE_ABSPATH.'php'.DIRECTORY_SEPARATOR.'header.inc.php';
 $Server=new \osWMensch\Server\Server();
 $server_list=$Server->getServerList();
 
-#
-#print_a($server_list);
-
 if ($server_list!=[]) {
 	foreach ($server_list as $server_id=>$server_details) {
 		$Rollout=new \osWMensch\Server\Rollout($server_details, \osWMensch\Server\Configure::getValueAsArray('release'));

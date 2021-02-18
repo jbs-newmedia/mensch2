@@ -48,6 +48,7 @@ if ((isset($_GET['action']))&&(in_array($_GET['action'], ['add', 'doadd']))) {
 		if (isset($_POST['server_file'])) {
 			$server_details['server_file']=$_POST['server_file'];
 		}
+
 		if (isset($_POST['server_secure'])) {
 			$server_details['server_secure']=$_POST['server_secure'];
 		}
@@ -97,7 +98,7 @@ if ((isset($_GET['action']))&&(in_array($_GET['action'], ['add', 'doadd']))) {
 		?>
 		<div class="card shadow mb-4">
 			<div class="card-header py-3">
-				<h6 class="m-0 font-weight-bold text-primary">Database|Settings</h6>
+				<h6 class="m-0 font-weight-bold text-primary">Database | Settings</h6>
 			</div>
 			<div class="card-body">
 				<div class="alert alert-success">
@@ -207,6 +208,7 @@ if ((isset($_GET['action']))&&(in_array($_GET['action'], ['add', 'doadd']))) {
 		if (isset($_POST['server_file'])) {
 			$server_details_new['server_file']=$_POST['server_file'];
 		}
+
 		if (isset($_POST['server_secure'])) {
 			$server_details_new['server_secure']=$_POST['server_secure'];
 		}
@@ -473,7 +475,7 @@ if ((isset($_GET['action']))&&(in_array($_GET['action'], ['add', 'doadd']))) {
 			<h6 class="m-0 font-weight-bold text-primary">Server | Settings</h6>
 		</div>
 		<div class="card-body">
-			<a href="index.php?page=settings_server&action=add" class="mb-4 btn btn-primary">Create Server</a>
+			<a href="settings/server?action=add" class="mb-4 btn btn-primary">Create Server</a>
 			<?php if ($Server->getServerList()!=[]): ?>
 			<div class="table-responsive">
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

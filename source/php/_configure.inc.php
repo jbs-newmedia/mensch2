@@ -11,10 +11,6 @@
  */
 
 /**
- * Beispieldatei, umbenennen in "configure.inc.php"
- */
-
-/**
  * Konfiguration
  */
 $configure['mysql_server']='localhost';
@@ -29,7 +25,6 @@ $configure['source_serverlist']='';
 $configure['source_serverlist_name']='';
 $configure['source_serverlist_package']='';
 $configure['mensch_url']='';
-$configure['mensch_url_path']='';
 $configure['mensch_path']=OSWMENSCH_CORE_ABSPATH;
 $configure['git_path']='';
 $configure['git_mensch_path']='';

@@ -218,6 +218,20 @@ class Rollout {
 	}
 
 	/**
+	 * @param array $license_data
+	 * @return bool
+	 */
+	public function checkServerLicense2Update(array $license_data):bool {
+		if ($this->updateServerLicense($license_data)===true) {
+			$this->addLog('License updated successfully');
+		} else {
+			$this->addLog('License can\'t update');
+		}
+
+		return true;
+	}
+
+	/**
 	 * @return bool
 	 */
 	public function updateServer():bool {
@@ -338,6 +352,51 @@ class Rollout {
 		}
 
 		return true;
+	}
+
+	/**
+	 * @param array $license_data
+	 * @return bool
+	 */
+	public function updateServerLicense(array $license_data):bool {
+		$packages=explode(',', $this->getPackages());
+		foreach ($packages as $_package) {
+			if (!isset($license_data[$_package])) {
+				$license_data[$_package]=[];
+			}
+
+		}
+
+		$send_package=[];
+		$send_package['license_data']=$license_data;
+
+		$token=sha1(serialize($send_package).'#'.$this->server_details['server_token']);
+		$send_package_raw='bof_'.base64_encode($this->encrypt('bof_'.base64_encode(serialize($send_package).'_eof'), $this->server_details['server_secure'])).'_eof';
+
+		$dir=Configure::getValueAsString('mensch_path').'.work'.DIRECTORY_SEPARATOR;
+		Configure::makeDir($dir);
+		$cache_package=$dir.'data.license';
+		file_put_contents($cache_package, $send_package_raw);
+
+		$cfile=new \CURLFile($cache_package, mime_content_type($cache_package), 'data');
+		$post=['data'=>$cfile, 'token'=>$token];
+
+		$ch=curl_init();
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_VERBOSE, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_URL, $this->server_details['server_url'].$this->server_details['server_file'].'?action=server_update_license');
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+		$response=curl_exec($ch);
+
+		unlink($cache_package);
+
+		if ($response=='ok') {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

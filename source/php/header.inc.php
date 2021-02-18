@@ -64,8 +64,7 @@
 			</a>
 			<div id="collapseLicense" class="collapse<?php if($Core->isActivePage('license')===true):?> show<?php endif?>" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 				<div class="bg-white py-2 collapse-inner rounded">
-					<a class="collapse-item<?php if($Core->isActivePage('license_create')===true):?> active<?php endif?>" href="license/create">Create</a>
-					<a class="collapse-item<?php if($Core->isActivePage('license_assign')===true):?> active<?php endif?>" href="license/assign">Assign</a>
+					<a class="collapse-item<?php if($Core->isActivePage('license_manage')===true):?> active<?php endif?>" href="license/manage">Manage</a>
 					<a class="collapse-item<?php if($Core->isActivePage('license_rollout')===true):?> active<?php endif?>" href="license/rollout">Rollout</a>
 				</div>
 			</div>
