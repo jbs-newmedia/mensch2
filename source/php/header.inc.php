@@ -24,7 +24,6 @@
 	<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 	<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<link href="css/sb-admin-2-mensch.min.css" rel="stylesheet">
-	<link href="css/mensch.css" rel="stylesheet">
 </head>
 <body id="page-top">
 <div id="wrapper">
