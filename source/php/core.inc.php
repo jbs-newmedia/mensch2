@@ -37,6 +37,7 @@ spl_autoload_register(function($className) {
  * UTF8 Header senden
  */
 header('Content-Type: text/html; charset=utf-8');
+$configure['mensch_update']=\osWMensch\Server\Core::getCurrentTag();
 
 /**
  * Konfiguration setzen

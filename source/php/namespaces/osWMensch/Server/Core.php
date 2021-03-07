@@ -92,6 +92,7 @@ class Core {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -105,6 +106,31 @@ class Core {
 		}
 
 		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public static function getCurrentTag():string {
+		$file=OSWMENSCH_CORE_ABSPATH.'current.tag';
+		if ((file_exists($file)!==true)||(filemtime($file)<=time()-(60*60*24))) {
+			$content=file_get_contents('https://api.github.com/repos/jbs-newmedia/mensch2/tags');
+			$json=json_decode($content, true);
+			$tag=$json[array_key_first($json)]['name'];
+			$tag=str_replace(['v.', 'v'], ['', ''], $tag);
+			file_put_contents($file, $tag);
+		}
+
+		return file_get_contents($file);
+	}
+
+	/**
+	 * @param string $v1
+	 * @param string $v2
+	 * @return bool
+	 */
+	public static function checkUpdate(string $v1, string $v2):bool {
+		return (version_compare($v1, $v2, '<'));
 	}
 
 }
