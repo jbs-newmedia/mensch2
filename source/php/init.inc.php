@@ -14,7 +14,7 @@
  * Konfiguration initialisieren
  */
 $configure=[];
-$configure['mensch_version']='2.3.2';
+$configure['mensch_version']='2.3.3';
 $configure['mensch_timezone']='Europe/Berlin';
 $configure['chmod_file']=0664;
 $configure['chmod_dir']=0775;
