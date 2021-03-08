@@ -405,7 +405,13 @@ class Rollout {
 	 */
 	public function getUrlData(string $file) {
 		$result='';
-		$res=curl_init($file);
+		$file=explode('?', $file);
+
+		$res=curl_init($file[0]);
+		curl_setopt($res, CURLOPT_POST, 1);
+		if (isset($file[1])) {
+			curl_setopt($res, CURLOPT_POSTFIELDS, $file[1]);
+		}
 		curl_setopt($res, CURLOPT_RETURNTRANSFER, 1);
 		$result=curl_exec($res);
 		curl_close($res);
