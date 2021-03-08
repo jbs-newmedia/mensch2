@@ -12,6 +12,11 @@ if ($return===null) {
 	\osWMensch\Server\Configure::copyRecursive(str_replace(\osWMensch\Server\Configure::getValueAsString('mensch_path'), './', \osWMensch\Server\Configure::getValueAsString('git_mensch_path').'source/'), str_replace(\osWMensch\Server\Configure::getValueAsString('mensch_path'), '.', \osWMensch\Server\Configure::getValueAsString('mensch_path')));
 }
 
+$file=OSWMENSCH_CORE_ABSPATH.'current.tag';
+if(file_exists($file)===true) {
+	unlink($file);
+}
+
 ?>
 
 	<div class="card shadow mb-4">

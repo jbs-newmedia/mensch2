@@ -10,6 +10,11 @@ if ($return===null) {
 	$return='result is null, command: "'.$cmd.'"';
 }
 
+$file=OSWMENSCH_CORE_ABSPATH.'current.tag';
+if(file_exists($file)===true) {
+	unlink($file);
+}
+
 ?>
 
 	<div class="card shadow mb-4">
