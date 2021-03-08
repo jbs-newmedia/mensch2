@@ -114,7 +114,7 @@ class Core {
 	public static function getCurrentTag():string {
 		$file=OSWMENSCH_CORE_ABSPATH.'current.tag';
 		if ((file_exists($file)!==true)||(filemtime($file)<=time()-(60*60*24))) {
-			$content=file_get_contents('https://api.github.com/repos/jbs-newmedia/mensch2/tags');
+			$content=file_get_contents('https://api.github.com/repos/jbs-newmedia/mensch2/tags', false, stream_context_create(["http"=>["method"=>"GET", "header"=>"Accept-language: en\r\nUser-Agent: Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.102011-10-16 20:23:10\r\n"]]));
 			$json=json_decode($content, true);
 			$tag=$json[array_key_first($json)]['name'];
 			$tag=str_replace(['v.', 'v'], ['', ''], $tag);
