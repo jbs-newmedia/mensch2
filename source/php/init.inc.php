@@ -7,14 +7,13 @@
  * @copyright Copyright (c) JBS New Media GmbH - Juergen Schwind (https://jbs-newmedia.com)
  * @package Mensch2
  * @link https://oswframe.com
- * @license https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
+ * @license MIT License
  */
 
 /**
  * Konfiguration initialisieren
  */
 $configure=[];
-$configure['mensch_version']='2.3.4';
 $configure['mensch_timezone']='Europe/Berlin';
 $configure['chmod_file']=0664;
 $configure['chmod_dir']=0775;

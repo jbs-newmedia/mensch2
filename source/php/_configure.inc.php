@@ -7,7 +7,7 @@
  * @copyright Copyright (c) JBS New Media GmbH - Juergen Schwind (https://jbs-newmedia.com)
  * @package Mensch2
  * @link https://oswframe.com
- * @license https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
+ * @license MIT License
  */
 
 /**
@@ -32,5 +32,7 @@ $configure['git_mensch_path']='';
 $configure['source_path']=$configure['git_path'].'source/';
 $configure['release']=['stable', 'beta', 'alpha'];
 $configure['prefix']=[''];
+$configure['htuser']='';
+$configure['htpass']='';
 
 ?>

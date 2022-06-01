@@ -7,7 +7,7 @@
  * @copyright Copyright (c) JBS New Media GmbH - Juergen Schwind (https://jbs-newmedia.com)
  * @package Mensch2
  * @link https://oswframe.com
- * @license https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
+ * @license MIT License
  */
 
 namespace osWMensch\Server;
@@ -20,6 +20,11 @@ class DB {
 	 * @var array
 	 */
 	public static array $connections=[];
+
+	/**
+	 * @var string
+	 */
+	protected static $error_message='';
 
 	/**
 	 * DB constructor.
@@ -42,8 +47,7 @@ class DB {
 			try {
 				self::$connections[$alias]['con']=new \PDO(self::$connections[$alias]['dns'], self::$connections[$alias]['user'], self::$connections[$alias]['password']);
 			} catch (\PDOException $e) {
-				/* TODO: Message */
-				echo 'Connection failed: '.$e->getMessage();
+				self::setErrorMessage($e->getMessage());
 
 				return false;
 			}
@@ -94,6 +98,20 @@ class DB {
 		}
 
 		return self::$connections[$alias]['con'];
+	}
+
+	/**
+	 * @param string $error_message
+	 */
+	public static function setErrorMessage(string $error_message):void {
+		self::$error_message=$error_message;
+	}
+
+	/**
+	 * @return string
+	 */
+	public static function getErrorMessage():string {
+		return self::$error_message;
 	}
 
 }

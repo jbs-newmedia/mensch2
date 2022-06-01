@@ -7,10 +7,12 @@
  * @copyright Copyright (c) JBS New Media GmbH - Juergen Schwind (https://jbs-newmedia.com)
  * @package Mensch2
  * @link https://oswframe.com
- * @license https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
+ * @license MIT License
  */
 
 namespace osWMensch\Server;
+
+use JBSNewMedia\GitInstall\Installer;
 
 class Core {
 
@@ -111,14 +113,37 @@ class Core {
 	/**
 	 * @return string
 	 */
+	public static function getVersion():string {
+		$file=OSWMENSCH_CORE_ABSPATH.'vendor'.DIRECTORY_SEPARATOR.'mensch2.json';
+		if (file_exists($file)===true) {
+			$json=json_decode(file_get_contents($file), true);
+			if (isset($json['version'])) {
+				return $json['version'];
+			}
+		}
+
+		return '';
+	}
+
+	/**
+	 * @return string
+	 */
 	public static function getCurrentTag():string {
-		$file=OSWMENSCH_CORE_ABSPATH.'current.tag';
+		$file=OSWMENSCH_CORE_ABSPATH.'vendor'.DIRECTORY_SEPARATOR.'mensch2.tag';
 		if ((file_exists($file)!==true)||(filemtime($file)<=time()-(60*60*24))) {
-			$content=file_get_contents('https://api.github.com/repos/jbs-newmedia/mensch2/tags', false, stream_context_create(["http"=>["method"=>"GET", "header"=>"Accept-language: en\r\nUser-Agent: Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.102011-10-16 20:23:10\r\n"]]));
-			$json=json_decode($content, true);
-			$tag=$json[array_key_first($json)]['name'];
-			$tag=str_replace(['v.', 'v'], ['', ''], $tag);
-			file_put_contents($file, $tag);
+			$Installer=new Installer();
+			$Installer->setRealPath(OSWMENSCH_CORE_ABSPATH);
+			$Installer->setName('jbsnewmedia/mensch2');
+			$Installer->setGit('github');
+			$Installer->setUrl('https://api.github.com/repos/jbs-newmedia/mensch2/releases');
+			$Installer->setRelease('stable');
+			$Installer->setAction('info');
+			$result=$Installer->runEngine();
+			if ((isset($result['info']))&&(isset($result['info']['version_remote']))) {
+				file_put_contents($file, $result['info']['version_remote']);
+			} else {
+				return '';
+			}
 		}
 
 		return file_get_contents($file);

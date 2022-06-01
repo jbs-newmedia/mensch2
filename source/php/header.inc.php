@@ -7,7 +7,7 @@
  * @copyright Copyright (c) JBS New Media GmbH - Juergen Schwind (https://jbs-newmedia.com)
  * @package Mensch2
  * @link https://oswframe.com
- * @license https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
+ * @license MIT License
  */
 
 ?>
@@ -52,8 +52,7 @@
 				<div class="bg-white py-2 collapse-inner rounded">
 					<a class="collapse-item<?php if($Core->isActivePage('code_git_pull')===true):?> active<?php endif?>" href="code/git_pull">Git pull</a>
 					<a class="collapse-item<?php if($Core->isActivePage('code_git_reset')===true):?> active<?php endif?>" href="code/git_reset">Git reset</a>
-					<a class="collapse-item<?php if($Core->isActivePage('code_git_mensch_update')===true):?> active<?php endif?>" href="code/git_mensch_update">Mensch update</a>
-					<a class="collapse-item<?php if($Core->isActivePage('code_git_mensch_reset')===true):?> active<?php endif?>" href="code/git_mensch_reset">Mensch reset</a>
+					<a class="collapse-item<?php if($Core->isActivePage('code_mensch2')===true):?> active<?php endif?>" href="code/mensch2">Mensch update</a>
 				</div>
 			</div>
 		</li>
@@ -106,7 +105,7 @@
 				<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
 					<i class="fa fa-bars"></i>
 				</button>
-				<span><strong>Systemtime: </strong><span id="time"><?php echo date('Y.m.d H:i:s')?></span></span>&nbsp;|&nbsp;<span><strong>Version: </strong><span id="version"><?php echo \osWMensch\Server\Configure::getValueAsString('mensch_version')?><?php if (\osWMensch\Server\Core::checkUpdate(\osWMensch\Server\Configure::getValueAsString('mensch_version'), \osWMensch\Server\Configure::getValueAsString('mensch_update'))===true):?> [<a href="code/git_mensch_update">update available</a>]<?php endif?></span></span>
+				<span><strong>Systemtime: </strong><span id="time"><?php echo date('Y.m.d H:i:s')?></span></span>&nbsp;|&nbsp;<span><strong>Version: </strong><span id="version"><?php echo \osWMensch\Server\Core::getVersion()?><?php if (\osWMensch\Server\Core::checkUpdate(\osWMensch\Server\Core::getVersion(), \osWMensch\Server\Configure::getValueAsString('mensch_update'))===true):?> [<a href="code/mensch2">update available</a>]<?php endif?></span></span>
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item dropdown no-arrow">
 								<span class="nav-link dropdown-toggle" href="#">

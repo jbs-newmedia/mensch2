@@ -7,13 +7,32 @@
  * @copyright Copyright (c) JBS New Media GmbH - Juergen Schwind (https://jbs-newmedia.com)
  * @package Mensch2
  * @link https://oswframe.com
- * @license https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
+ * @license MIT License
  */
 
 /**
  * Zeitzone setzen
  */
 date_default_timezone_set($configure['mensch_timezone']);
+
+/**
+ * Schutz
+ */
+if ((isset($configure['htuser']))&&($configure['htuser']!='')&&(isset($configure['htpass']))&&($configure['htpass']!='')) {
+	if (((!isset($_SERVER['PHP_AUTH_USER']))||($_SERVER['PHP_AUTH_USER']!=$configure['htuser']))||((!isset($_SERVER['PHP_AUTH_PW']))||($_SERVER['PHP_AUTH_PW']!=$configure['htpass']))) {
+		if ((isset($_SERVER['PHP_AUTH_USER']))&&(isset($_SERVER['PHP_AUTH_PW']))) {
+			if (($_SERVER['PHP_AUTH_USER']!=$configure['htuser'])||($_SERVER['PHP_AUTH_PW']!=$configure['htpass'])) {
+				header('WWW-Authenticate: Basic realm="mensch² protection"');
+				header('HTTP/1.0 401 Unauthorized');
+				die('blocked');
+			}
+		} else {
+			header('WWW-Authenticate: Basic realm=mensch² protection"');
+			header('HTTP/1.0 401 Unauthorized');
+			die('blocked');
+		}
+	}
+}
 
 /**
  * Autoloader für Namespaces
@@ -72,6 +91,8 @@ if (\osWMensch\Server\Configure::getValueAsString('mensch_url').'/'!=($_SERVER['
  * Datenbank verbinden
  */
 \osWMensch\Server\DB::addConnectionMYSQL(\osWMensch\Server\Configure::getValueAsString('mysql_server'), \osWMensch\Server\Configure::getValueAsString('mysql_user'), \osWMensch\Server\Configure::getValueAsString('mysql_password'), \osWMensch\Server\Configure::getValueAsString('mysql_database'), \osWMensch\Server\Configure::getValueAsString('mysql_character'));
-\osWMensch\Server\DB::connect();
+if (\osWMensch\Server\DB::connect()===false) {
+	die('database is currently not configured. '.\osWMensch\Server\DB::getErrorMessage());
+}
 
 ?>

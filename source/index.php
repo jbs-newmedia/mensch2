@@ -32,6 +32,9 @@ require_once OSWMENSCH_CORE_ABSPATH.'php'.DIRECTORY_SEPARATOR.'init.inc.php';
 /**
  * Konfiguration laden
  */
+if (!file_exists(OSWMENSCH_CORE_ABSPATH.'php'.DIRECTORY_SEPARATOR.'configure.inc.php')) {
+	die('mensch2 is currently not configured.');
+}
 require_once OSWMENSCH_CORE_ABSPATH.'php'.DIRECTORY_SEPARATOR.'configure.inc.php';
 
 /**
