@@ -14,7 +14,7 @@ $Core->setTitle('Git reset | Code');
 
 require_once OSWMENSCH_CORE_ABSPATH.'php'.DIRECTORY_SEPARATOR.'header.inc.php';
 
-$cmd='cd '.\osWMensch\Server\Configure::getValueAsString('git_path').' && git reset --hard HEAD';
+$cmd='rm -R '.\osWMensch\Server\Configure::getValueAsString('git_path').'source && cd '.\osWMensch\Server\Configure::getValueAsString('git_path').' && git reset --hard HEAD && git pull';
 $return=shell_exec($cmd);
 if ($return===null) {
 	$return='result is null, command: "'.$cmd.'"';
