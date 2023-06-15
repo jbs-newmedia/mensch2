@@ -52,6 +52,7 @@
 				<div class="bg-white py-2 collapse-inner rounded">
 					<a class="collapse-item<?php if($Core->isActivePage('code_git_pull')===true):?> active<?php endif?>" href="code/git_pull">Git pull</a>
 					<a class="collapse-item<?php if($Core->isActivePage('code_git_reset')===true):?> active<?php endif?>" href="code/git_reset">Git reset</a>
+					<a class="collapse-item<?php if($Core->isActivePage('code_git_clear')===true):?> active<?php endif?>" href="code/git_clear">Git clear</a>
 					<a class="collapse-item<?php if($Core->isActivePage('code_mensch2')===true):?> active<?php endif?>" href="code/mensch2">Mensch update</a>
 				</div>
 			</div>
