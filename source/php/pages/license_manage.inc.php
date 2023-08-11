@@ -14,19 +14,6 @@ $Core->setTitle('Manage | License');
 
 $License=new \osWMensch\Server\License();
 
-if ((isset($_GET['action']))&&(in_array($_GET['action'], ['download']))) {
-
-	if (isset($_POST['license_id'])) {
-		$license_id=intval($_POST['license_id']);
-	} elseif (isset($_GET['license_id'])) {
-		$license_id=intval($_GET['license_id']);
-	} else {
-		$license_id=0;
-	}
-
-	$License->downloadLicense($license_id);
-}
-
 if ((!isset($_GET['action']))||(!in_array($_GET['action'], ['doassign']))) {
 	require_once OSWMENSCH_CORE_ABSPATH.'php'.DIRECTORY_SEPARATOR.'header.inc.php';
 }
@@ -36,7 +23,6 @@ if ((isset($_GET['action']))&&(in_array($_GET['action'], ['add', 'doadd']))) {
 	$license_details=[];
 	$license_details['license_name']='';
 	$license_details['license_description']='';
-	$license_details['license_server_name']='';
 	$license_details['license_server_address']='';
 	$license_details['license_server_mac']='';
 	$license_details['license_key']='';
@@ -131,19 +117,15 @@ if ((isset($_GET['action']))&&(in_array($_GET['action'], ['add', 'doadd']))) {
 						<input type="text" class="form-control" name="license_description" value="<?php echo $license_details['license_description'] ?>">
 					</div>
 					<div class="form-group">
-						<label for="license_server_name">Server-Name:</label>
-						<input type="text" class="form-control" name="license_server_name" value="<?php echo $license_details['license_server_name'] ?>">
-					</div>
-					<div class="form-group">
-						<label for="license_server_address">Server-Address:</label>
+						<label for="license_server_address">Account-Email:</label>
 						<input type="text" class="form-control" name="license_server_address" value="<?php echo $license_details['license_server_address'] ?>">
 					</div>
 					<div class="form-group">
-						<label for="license_server_mac">Server-MAC:</label>
+						<label for="license_server_mac">Frame-Key:</label>
 						<input type="text" class="form-control" name="license_server_mac" value="<?php echo $license_details['license_server_mac'] ?>">
 					</div>
 					<div class="form-group">
-						<label for="license_key">Key:</label>
+						<label for="license_key">License-Key:</label>
 						<input type="text" class="form-control" name="license_key" value="<?php echo $license_details['license_key'] ?>">
 					</div>
 					<div class="form-group">
@@ -272,19 +254,15 @@ if ((isset($_GET['action']))&&(in_array($_GET['action'], ['add', 'doadd']))) {
 						<input type="text" class="form-control" name="license_description" value="<?php echo $license_details['license_description'] ?>">
 					</div>
 					<div class="form-group">
-						<label for="license_server_name">Server-Name:</label>
-						<input type="text" class="form-control" name="license_server_name" value="<?php echo $license_details['license_server_name'] ?>">
-					</div>
-					<div class="form-group">
-						<label for="license_server_address">Server-Address:</label>
+						<label for="license_server_address">Account-Email:</label>
 						<input type="text" class="form-control" name="license_server_address" value="<?php echo $license_details['license_server_address'] ?>">
 					</div>
 					<div class="form-group">
-						<label for="license_server_mac">Server-MAC:</label>
+						<label for="license_server_mac">Frame-Key:</label>
 						<input type="text" class="form-control" name="license_server_mac" value="<?php echo $license_details['license_server_mac'] ?>">
 					</div>
 					<div class="form-group">
-						<label for="license_key">Key:</label>
+						<label for="license_key">License-Key:</label>
 						<input type="text" class="form-control" name="license_key" value="<?php echo $license_details['license_key'] ?>">
 					</div>
 					<div class="form-group">
