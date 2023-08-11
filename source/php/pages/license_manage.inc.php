@@ -508,9 +508,9 @@ if ((isset($_GET['action']))&&(in_array($_GET['action'], ['add', 'doadd']))) {
 							<tr>
 								<td><?php echo $license['license_name'] ?></td>
 								<td><?php echo $license['license_description'] ?></td>
-								<td><?php echo substr($license['license_server_address'], 0, 12) ?>...</td>
+								<td><?php echo $license['license_server_address'] ?></td>
 								<td><?php echo substr($license['license_server_mac'], 0, 12) ?>...</td>
-								<td><?php echo $license['license_key'] ?></td>
+								<td><?php echo substr($license['license_key'], 0, 12) ?>...</td>
 								<?php if ($license['license_status']==1): ?>
 									<td><span class="badge badge-success">active</span></td>
 								<?php else: ?>
