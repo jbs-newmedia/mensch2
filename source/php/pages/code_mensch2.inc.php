@@ -43,12 +43,8 @@ if (file_exists($htaccess)) {
 }
 
 if ($htaccess_content_old!=$htaccess_content_new) {
-	print_a($htaccess_content_old);
-	print_a($htaccess_content_new);
 	$start=strpos($htaccess_content_old, '### mensch2 start ###');
 	$end=strpos($htaccess_content_old, '### mensch2-end ###');
-	print_a($start);
-	print_a($end);
 	$htaccess_content='';
 	if (($end===false)||($start===false)) {
 		$htaccess_content=$htaccess_content_old.$htaccess_content_new;
