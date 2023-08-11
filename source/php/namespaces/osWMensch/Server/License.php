@@ -119,8 +119,10 @@ class License {
 			if ($this->package_license_list==[]) {
 				foreach ($this->getLicenseList() as $license) {
 					$QgetData=self::getConnection();
-					$QgetData->prepare('SELECT * FROM :table: WHERE license_id=:license_id: ORDER BY license2package_package ASC');
+					$QgetData->prepare('SELECT * FROM :table: AS l2p INNER JOIN :tablel: AS l ON (l.license_id=l2p.license_id AND l.license_status=:license_status:) WHERE l2p.license_id=:license_id: ORDER BY l2p.license2package_package ASC');
 					$QgetData->bindTable(':table:', 'mensch_license2package');
+					$QgetData->bindTable(':tablel:', 'mensch_license');
+					$QgetData->bindInt(':license_status:', 1);
 					$QgetData->bindInt(':license_id:', $license['license_id']);
 					foreach ($QgetData->query() as $package) {
 						if (!isset($this->package_license_list[$package['license2package_package']])) {

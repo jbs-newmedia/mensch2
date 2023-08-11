@@ -157,14 +157,12 @@ if ((isset($_GET['action']))&&(in_array($_GET['action'], ['add', 'doadd']))) {
 
 	$license_details_new=[];
 	$license_details_new['license_name']='';
-	$license_details_new['license_version']='';
-	$license_details_new['license_rank']='';
-	$license_details_new['license_url']='';
-	$license_details_new['license_file']='';
-	$license_details_new['license_secure']='';
-	$license_details_new['license_token']='';
+	$license_details_new['license_description']='';
+	$license_details_new['license_server_name']='';
+	$license_details_new['license_server_address']='';
+	$license_details_new['license_server_mac']='';
+	$license_details_new['license_key']='';
 	$license_details_new['license_status']='';
-	$license_details_new['license_lastconnect']='';
 
 	$error=[];
 
@@ -448,7 +446,7 @@ if ((isset($_GET['action']))&&(in_array($_GET['action'], ['add', 'doadd']))) {
 			<div class="card-body">
 
 				<?php if ($License->getPackageList()!=[]): ?>
-				<h4>License: <?php echo $license_details['license_name']?></h4>
+					<h4>License: <?php echo $license_details['license_name']?></h4>
 					<div class="table-responsive">
 						<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 							<thead>
