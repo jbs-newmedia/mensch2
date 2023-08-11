@@ -15,6 +15,11 @@ namespace JBSNewMedia\GitInstall;
 class Installer {
 
 	/**
+	 * @var int
+	 */
+	protected int $cache_time=3600;
+
+	/**
 	 * @var string
 	 */
 	protected string $action='';
@@ -37,7 +42,12 @@ class Installer {
 	/**
 	 * @var string
 	 */
-	protected string $url='';
+	protected string $release_url='';
+
+	/**
+	 * @var string
+	 */
+	protected string $download_url='';
 
 	/**
 	 * @var string
@@ -67,6 +77,16 @@ class Installer {
 	/**
 	 * @var array
 	 */
+	protected array $ignored_files=[];
+
+	/**
+	 * @var array
+	 */
+	protected array $ignored_directories=[];
+
+	/**
+	 * @var array
+	 */
 	protected array $files=[];
 
 	/**
@@ -87,12 +107,22 @@ class Installer {
 	/**
 	 * @var string
 	 */
+	protected string $install_version='';
+
+	/**
+	 * @var string
+	 */
 	protected string $local_version='';
 
 	/**
 	 * @var string
 	 */
 	protected string $remote_version='';
+
+	/**
+	 * @var array
+	 */
+	protected array $remote_version_list=[];
 
 	/**
 	 * @var string
@@ -144,6 +174,20 @@ class Installer {
 	 */
 	public function __construct() {
 		$this->setUseragent('Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0');
+	}
+
+	/**
+	 * @param int $cache_time
+	 */
+	public function setCacheTime(int $cache_time):void {
+		$this->cache_time=$cache_time;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getCacheTime():int {
+		return $this->cache_time;
 	}
 
 	/**
@@ -204,16 +248,46 @@ class Installer {
 
 	/**
 	 * @param string $url
+	 * @deprecated
 	 */
 	public function setUrl(string $url):void {
-		$this->url=$url;
+		$this->setReleaseUrl($url);
+	}
+
+	/**
+	 * @return string
+	 * @deprecated
+	 */
+	public function getUrl():string {
+		return $this->getReleaseUrl();
+	}
+
+	/**
+	 * @param string $release_url
+	 */
+	public function setReleaseUrl(string $release_url):void {
+		$this->release_url=$release_url;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getUrl():string {
-		return $this->url;
+	public function getReleaseUrl():string {
+		return $this->release_url;
+	}
+
+	/**
+	 * @param string $download_url
+	 */
+	public function setDownloadUrl(string $download_url):void {
+		$this->download_url=$download_url;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDownloadUrl():string {
+		return $this->download_url;
 	}
 
 	/**
@@ -330,6 +404,34 @@ class Installer {
 	}
 
 	/**
+	 * @param array $ignored_files
+	 */
+	public function setIgnoredFiles(array $ignored_files):void {
+		$this->ignored_files=$ignored_files;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getIgnoredFiles():array {
+		return $this->ignored_files;
+	}
+
+	/**
+	 * @param array $ignored_directories
+	 */
+	public function setIgnoredDirectories(array $ignored_directories):void {
+		$this->ignored_directories=$ignored_directories;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getIgnoredDirectories():array {
+		return $this->ignored_directories;
+	}
+
+	/**
 	 * @param string $real_path
 	 */
 	public function setRealPath(string $real_path):void {
@@ -358,6 +460,20 @@ class Installer {
 	}
 
 	/**
+	 * @param string $install_version
+	 */
+	public function setInstallVersion(string $install_version):void {
+		$this->install_version=$install_version;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getInstallVersion():string {
+		return $this->install_version;
+	}
+
+	/**
 	 * @param string $local_version
 	 */
 	public function setLocalVersion(string $local_version):void {
@@ -383,6 +499,36 @@ class Installer {
 	 */
 	public function getRemoteVersion():string {
 		return $this->remote_version;
+	}
+
+	/**
+	 * @param array $remote_version_list
+	 */
+	public function initRemoteVersionList():void {
+		$this->remote_version_list=[];
+	}
+
+	/**
+	 * @param string $remote_version
+	 * @param string $remote_file
+	 * @return void
+	 */
+	public function addRemoteVersionList(string $remote_version, string $remote_file):void {
+		$this->remote_version_list[$remote_version]=$remote_file;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getRemoteVersionList(string $remote_version=''):array {
+		if ($remote_version=='') {
+			return $this->remote_version_list;
+		}
+		if (isset($this->remote_version_list[$remote_version])) {
+			return [$remote_version=>$this->remote_version_list[$remote_version]];
+		}
+
+		return [];
 	}
 
 	/**
@@ -512,6 +658,14 @@ class Installer {
 	}
 
 	/**
+	 * @param string $tag_name
+	 * @return string
+	 */
+	protected function getGitLabDownloadUrl(string $tag_name):string {
+		return str_replace('{tag_name}', $tag_name, $this->getDownloadUrl());
+	}
+
+	/**
 	 * @return void
 	 */
 	public function runEngine():array {
@@ -532,6 +686,7 @@ class Installer {
 				$output['info']['name']=$this->getName();
 				$output['info']['version_local']=$this->getLocalVersion();
 				$output['info']['version_remote']=$this->getRemoteVersion();
+				$output['info']['version_remote_list']=$this->getRemoteVersionList();
 				$output['info']['executable']=$this->isExecutable();
 			} else {
 				$output['error']=true;
@@ -602,48 +757,54 @@ class Installer {
 	 * @return string
 	 */
 	protected function getUrlData(string $url):string {
-		if (in_array($this->getGit(), ['github'])) {
-			$useragent='Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0';
+		$cache_file=md5($url).'.cache';
+		if ((!file_exists($cache_file))||(filemtime($cache_file)<(time()-$this->getCacheTime()))) {
+			if (in_array($this->getGit(), ['github'])) {
+				$useragent='Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0';
 
-			$ch=curl_init();
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			if (strlen($this->getUser())>0) {
-				curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-				curl_setopt($ch, CURLOPT_USERPWD, $this->getUser().":".$this->getPassword());
+				$ch=curl_init();
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				if (strlen($this->getUser())>0) {
+					curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+					curl_setopt($ch, CURLOPT_USERPWD, $this->getUser().":".$this->getPassword());
+				}
+
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+				$return=curl_exec($ch);
+				curl_close($ch);
+				file_put_contents($cache_file, $return);
+
+				return $return;
 			}
+			if (in_array($this->getGit(), ['gitlab'])) {
+				$useragent='Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0';
 
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+				$ch=curl_init();
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				if (strlen($this->getToken())>0) {
+					$headers=[];
+					$headers[]='PRIVATE-TOKEN: '.$this->getToken();
+					curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+				}
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
-			$return=curl_exec($ch);
-			curl_close($ch);
+				$return=curl_exec($ch);
+				curl_close($ch);
+				file_put_contents($cache_file, $return);
 
-			return $return;
-		}
-		if (in_array($this->getGit(), ['gitlab'])) {
-			$useragent='Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0';
-
-			$ch=curl_init();
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			if (strlen($this->getToken())>0) {
-				$headers=[];
-				$headers[]='PRIVATE-TOKEN: '.$this->getToken();
-				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+				return $return;
 			}
-
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-
-			$return=curl_exec($ch);
-			curl_close($ch);
-
-			return $return;
+		} else {
+			return file_get_contents($cache_file);
 		}
 
 		return '';
@@ -653,7 +814,7 @@ class Installer {
 	 * @return bool
 	 */
 	public function setInformation():bool {
-		$remote_info=json_decode($this->getUrlData($this->getUrl()), true);
+		$remote_info=json_decode($this->getUrlData($this->getReleaseUrl()), true);
 		if (!is_array($remote_info)) {
 			$this->setError(true);
 			$this->setErrorString('error loading json (remote)');
@@ -679,60 +840,105 @@ class Installer {
 		$load=false;
 
 		if (in_array($this->getGit(), ['github'])) {
+			$i=0;
+			$this->initRemoteVersionList();
 			foreach ($remote_info as $_git) {
 				if ($this->getRelease()=='stable') {
-					if (($_git['draft']==false)&&($_git['prerelease']==false)) {
-						$this->setRemoteVersion($_git['tag_name']);
-						$this->setGitZipUrl($_git['zipball_url']);
-						$load=true;
-						break;
+					if ((isset($_git['draft']))&&(isset($_git['prerelease']))&&($_git['draft']==false)&&($_git['prerelease']==false)) {
+						if (($i==0)||($_git['tag_name']==$this->getInstallVersion())) {
+							$this->setRemoteVersion($_git['tag_name']);
+							$this->setGitZipUrl($_git['zipball_url']);
+							$load=true;
+						}
+						$this->addRemoteVersionList($_git['tag_name'], $_git['zipball_url']);
+						$i++;
+						if ($i>=5) {
+							break;
+						}
 					}
 				}
 				if ($this->getRelease()=='prerelease') {
-					if (($_git['draft']==false)&&($_git['prerelease']==true)) {
-						$this->setRemoteVersion($_git['tag_name']);
-						$this->setGitZipUrl($_git['zipball_url']);
-						$load=true;
-						break;
+					if ((isset($_git['draft']))&&(isset($_git['prerelease']))&&($_git['draft']==false)&&($_git['prerelease']==true)) {
+						if (($i==0)||($_git['tag_name']==$this->getInstallVersion())) {
+							$this->setRemoteVersion($_git['tag_name']);
+							$this->setGitZipUrl($_git['zipball_url']);
+							$load=true;
+						}
+						$this->addRemoteVersionList($_git['tag_name'], $_git['zipball_url']);
+						$i++;
+						if ($i>=5) {
+							break;
+						}
 					}
 				}
 			}
 		}
 
 		if (in_array($this->getGit(), ['gitlab'])) {
+			$i=0;
+			$this->initRemoteVersionList();
 			foreach ($remote_info as $_git) {
 				if ($this->getRelease()=='stable') {
-					if ($_git['upcoming_release']==false) {
-						$this->setRemoteVersion($_git['tag_name']);
+					if ((isset($_git['upcoming_release']))&&($_git['upcoming_release']==false)) {
+						if (($i==0)||($_git['tag_name']==$this->getInstallVersion())) {
+							$this->setRemoteVersion($_git['tag_name']);
+							foreach ($_git['assets']['sources'] as $source) {
+								if ($source['format']=='zip') {
+									$this->setGitZipUrl($this->getGitLabDownloadUrl($_git['tag_name']));
+									$load=true;
+									break;
+								}
+							}
+						}
 						foreach ($_git['assets']['sources'] as $source) {
 							if ($source['format']=='zip') {
-								$this->setGitZipUrl($source['url']);
+								$this->addRemoteVersionList($_git['tag_name'], $source['url']);
+								$this->setGitZipUrl($this->getGitLabDownloadUrl($_git['tag_name']));
 								$load=true;
 								break;
 							}
 						}
-						break;
+						$i++;
+						if ($i>=5) {
+							break;
+						}
 					}
 				}
 				if ($this->getRelease()=='prerelease') {
-					if ($_git['upcoming_release']==true) {
-						$this->setRemoteVersion($_git['tag_name']);
+					if ((isset($_git['upcoming_release']))&&($_git['upcoming_release']==true)) {
+						if ($i==0) {
+							$this->setRemoteVersion($_git['tag_name']);
+							foreach ($_git['assets']['sources'] as $source) {
+								if ($source['format']=='zip') {
+									$this->setGitZipUrl($this->getGitLabDownloadUrl($_git['tag_name']));
+									$load=true;
+									break;
+								}
+							}
+						}
 						foreach ($_git['assets']['sources'] as $source) {
 							if ($source['format']=='zip') {
-								$this->setGitZipUrl($source['url']);
+								$this->addRemoteVersionList($_git['tag_name'], $source['url']);
+								$this->setGitZipUrl($this->getGitLabDownloadUrl($_git['tag_name']));
 								$load=true;
 								break;
 							}
 						}
-						break;
+						$i++;
+						if ($i>=5) {
+							break;
+						}
 					}
 				}
 			}
 		}
-
 		if ($load!==true) {
+			if (isset($remote_info['message'])) {
+				$this->setErrorString($remote_info['message']);
+			} else {
+				$this->setErrorString('error loading git');
+			}
 			$this->setError(true);
-			$this->setErrorString('error loading git');
 
 			return false;
 		}
@@ -768,32 +974,36 @@ class Installer {
 			$directories_local=$this->getDirectories();
 			for ($i=0; $i<$this->getZipArchive()->count(); $i++) {
 				$stat=$this->getZipArchive()->statIndex($i);
-				if (($git_path=='')||(strpos($stat['name'], $git_path)===0)) {
-					if (($stat['crc']==0)&&($stat['size']==0)) {
-						if ($i==0) {
-							$git_path=$stat['name'];
-							$git_base_path=$stat['name'];
-							if ($this->getRemotePath()!='') {
-								$git_path.=$this->getRemotePath();
-							}
+				if ($i==0) {
+					$git_path=$stat['name'];
+					$git_base_path=$stat['name'];
+					if ($this->getRemotePath()!='') {
+						$git_path.=$this->getRemotePath();
+					}
+				}
+				$name=str_replace([$git_path.DIRECTORY_SEPARATOR, $git_base_path], ['', ''], $stat['name']);
+				if (($stat['crc']==0)&&($stat['size']==0)) {
+					$status='directory';
+				} else {
+					$status='file';
+				}
+				if ((strpos($stat['name'], $git_path)===0)&&($this->checkIgnored($name, $status)!==true)) {
+					if ($status=='directory') {
+						if (is_dir($this->getLocalRealPath().$name)!==true) {
+							mkdir($this->getLocalRealPath().$name, $this->getChmodDir(), true);
 						}
-						$dir=str_replace([$git_path.DIRECTORY_SEPARATOR, $git_base_path], ['', ''], $stat['name']);
-						if (is_dir($this->getLocalRealPath().$dir)!==true) {
-							mkdir($this->getLocalRealPath().$dir, $this->getChmodDir(), true);
+						if (isset($directories_local[$this->getLocalRealPath().$name])) {
+							unset($directories_local[$this->getLocalRealPath().$name]);
 						}
-						if (isset($directories_local[$this->getLocalRealPath().$dir])) {
-							unset($directories_local[$this->getLocalRealPath().$dir]);
-						}
-						$directories[$this->getLocalRealPath().$dir]='';
-					} else {
+						$directories[$this->getLocalRealPath().$name]='';
+					} elseif ($status=='file') {
 						$data=$this->getZipArchive()->getFromIndex($i);
-						$dir=str_replace($git_path.DIRECTORY_SEPARATOR, '', $stat['name']);
-						file_put_contents($this->getLocalRealPath().$dir, $data);
-						@chmod($this->getLocalRealPath().$dir, $this->getChmodFile());
-						if (isset($files_local[$this->getLocalRealPath().$dir])) {
-							unset($files_local[$this->getLocalRealPath().$dir]);
+						file_put_contents($this->getLocalRealPath().$name, $data);
+						@chmod($this->getLocalRealPath().$name, $this->getChmodFile());
+						if (isset($files_local[$this->getLocalRealPath().$name])) {
+							unset($files_local[$this->getLocalRealPath().$name]);
 						}
-						$files[$this->getLocalRealPath().$dir]='';
+						$files[$this->getLocalRealPath().$name]='';
 					}
 				}
 			}
@@ -877,6 +1087,25 @@ class Installer {
 
 			return preg_replace("/\/+/", "/", "$a/$b");
 		});
+	}
+
+	/**
+	 * @param string $name
+	 * @param string $status
+	 * @return bool
+	 */
+	protected function checkIgnored(string $name, string $status):bool {
+		foreach ($this->getIgnoredDirectories() as $ignored_dir) {
+			if (strpos($name, $ignored_dir)===0) {
+				return true;
+			}
+		}
+
+		if ($status=='file') {
+			return in_array($name, $this->getIgnoredFiles());
+		}
+
+		return false;
 	}
 
 }
