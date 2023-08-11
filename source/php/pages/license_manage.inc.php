@@ -23,6 +23,7 @@ if ((isset($_GET['action']))&&(in_array($_GET['action'], ['add', 'doadd']))) {
 	$license_details=[];
 	$license_details['license_name']='';
 	$license_details['license_description']='';
+	$license_details['license_server_name']='';
 	$license_details['license_server_address']='';
 	$license_details['license_server_mac']='';
 	$license_details['license_key']='';
