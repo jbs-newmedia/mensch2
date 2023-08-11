@@ -358,19 +358,15 @@ if ((isset($_GET['action']))&&(in_array($_GET['action'], ['add', 'doadd']))) {
 						<div class="form-control"><?php echo $license_details['license_description'] ?></div>
 					</div>
 					<div class="form-group">
-						<label for="license_server_name">Server-Name:</label>
-						<div class="form-control"><?php echo $license_details['license_server_name'] ?></div>
-					</div>
-					<div class="form-group">
-						<label for="license_server_address">Server-Address:</label>
+						<label for="license_server_address">Account-Email:</label>
 						<div class="form-control"><?php echo $license_details['license_server_address'] ?></div>
 					</div>
 					<div class="form-group">
-						<label for="license_server_mac">Server-MAC:</label>
+						<label for="license_server_mac">Frame-Key:</label>
 						<div class="form-control"><?php echo $license_details['license_server_mac'] ?></div>
 					</div>
 					<div class="form-group">
-						<label for="license_key">Key:</label>
+						<label for="license_key">License-Key:</label>
 						<div class="form-control"><?php echo $license_details['license_key'] ?></div>
 					</div>
 					<div class="form-group">
@@ -500,10 +496,9 @@ if ((isset($_GET['action']))&&(in_array($_GET['action'], ['add', 'doadd']))) {
 						<tr>
 							<th>Name</th>
 							<th>Description</th>
-							<th>Server-Name</th>
-							<th>Server-Address</th>
-							<th>Server-Mac</th>
-							<th>Key</th>
+							<th>Account-Email</th>
+							<th>Frame-Key</th>
+							<th>License-Key</th>
 							<th>Status</th>
 							<th>Options</th>
 						</tr>
@@ -513,7 +508,6 @@ if ((isset($_GET['action']))&&(in_array($_GET['action'], ['add', 'doadd']))) {
 							<tr>
 								<td><?php echo $license['license_name'] ?></td>
 								<td><?php echo $license['license_description'] ?></td>
-								<td><?php echo $license['license_server_name'] ?></td>
 								<td><?php echo $license['license_server_address'] ?></td>
 								<td><?php echo $license['license_server_mac'] ?></td>
 								<td><?php echo $license['license_key'] ?></td>
