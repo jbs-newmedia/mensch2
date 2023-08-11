@@ -34,5 +34,5 @@ $configure['release']=['stable', 'beta', 'alpha'];
 $configure['prefix']=[''];
 $configure['htuser']='';
 $configure['htpass']='';
-
+$configure['mensch_token']='';
 ?>

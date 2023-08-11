@@ -245,6 +245,7 @@ class Rollout {
 		$file_server_content_current=str_replace('$SERVER_LIST$', \osWMensch\Server\Configure::getValueAsString('source_serverlist_package'), $file_server_content_current);
 		$file_server_content_current=str_replace('$SERVER_SECURE$', $this->server_details['server_secure'], $file_server_content_current);
 		$file_server_content_current=str_replace('$SERVER_TOKEN$', $this->server_details['server_token'], $file_server_content_current);
+		$file_server_content_current=str_replace('$MENSCH_TOKEN$', \osWMensch\Server\Configure::getValueAsString('mensch_token'), $file_server_content_current);
 
 		$token=sha1(sha1($file_server_content_current).'#'.$this->server_details['server_token']);
 		$send_package='bof_'.base64_encode($this->encrypt('bof_'.base64_encode($file_server_content_current).'_eof', $this->server_details['server_secure'])).'_eof';
