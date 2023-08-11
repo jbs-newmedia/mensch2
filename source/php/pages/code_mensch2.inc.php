@@ -17,7 +17,7 @@ require_once OSWMENSCH_CORE_ABSPATH.'php'.DIRECTORY_SEPARATOR.'header.inc.php';
 use \JBSNewMedia\GitInstall\Installer;
 
 $htaccess_content_old='';
-$htaccess=OSWMENSCH_CORE_ABSPATH.'.htaccess2';
+$htaccess=OSWMENSCH_CORE_ABSPATH.'.htaccess';
 if (file_exists($htaccess)) {
 	$htaccess_content_old=file_get_contents($htaccess);
 }
