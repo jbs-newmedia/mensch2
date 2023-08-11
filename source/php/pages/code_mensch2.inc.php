@@ -47,7 +47,7 @@ if ($htaccess_content_old!=$htaccess_content_new) {
 	$end=strpos($htaccess_content_old, '### mensch2-end ###');
 	$htaccess_content='';
 	if (($end===false)||($start===false)) {
-		$htaccess_content=$htaccess_content_old.$htaccess_content_new;
+		$htaccess_content=$htaccess_content_old."\n\n".$htaccess_content_new;
 	} else {
 		$htaccess_content=substr($htaccess_content_old, 0, $start).$htaccess_content_new.substr($htaccess_content_old, $end+strlen('### mensch2-end ###'));
 	}
